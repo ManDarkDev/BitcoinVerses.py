@@ -1,0 +1,45 @@
+import tkinter as tk
+from PIL import ImageTk, Image, ImageDraw, ImageFont
+
+
+def create_cover():
+    img_width, img_height = 600, 800
+    background_color = (10, 10, 10)  # Wood oak brown
+    img = Image.new('RGB', (img_width, img_height), color=background_color)
+
+    draw = ImageDraw.Draw(img)
+    gold_color = (75, 350, 75)  # Metallic gold
+
+    text = "Bitcoin Verses"
+    
+    try:
+        # Load a TrueType or OpenType font file, and create a font object
+        font = ImageFont.truetype("arial.ttf", 60)
+    except IOError:
+        # If the font file is not found, use the default font
+        font = ImageFont.load_default()
+
+    # Calculate text bounding box
+    bbox = draw.textbbox((0, 0), text, font=font)
+
+    text_width = bbox[2] - bbox[0]
+    text_height = bbox[3] - bbox[1]
+
+    # Calculate position (centered)
+    x = (img_width - text_width) / 2
+    y = (img_height - text_height) / 3
+
+    # Add text to the image
+    draw.text((x, y), text, font=font, fill=gold_color)
+
+    # Save the cover image
+    img.save('cover.png')
+    print("Cover image 'cover.png' created successfully.")
+
+    img.show()
+
+# Create the cover
+create_cover()
+
+
+
